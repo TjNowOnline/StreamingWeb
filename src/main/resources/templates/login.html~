@@ -1,17 +1,26 @@
+I love that vibe—early summer days, orange warmth streaming through a window, and that cozy, happy feeling. Let’s transform your login and movie list pages into a visual representation of this scene, with a sleek, minimalistic, and modern twist to keep it professional and study-like. The background will evoke sunlight spilling through a window, casting soft orange rays, while the design stays clean and uplifting. Here’s the result:
+
+html
+
+Preview
+
+Collapse
+
+Wrap
+
+Copy
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login | Dheis Popcorn Time</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Login</title>
     <style>
         :root {
-            --primary: #ff8c38; /* Warm orange */
-            --dark: #fff5e6; /* Creamy off-white */
+            --primary: #ff8c38; /* Warm orange for summer rays */
+            --dark: #fff5e6; /* Soft, creamy off-white for warmth */
             --light: #ffffff;
-            --accent: #ffe8cc; /* Pale peach */
-            --shadow: rgba(255, 140, 56, 0.25);
-            --text: #4a3f35; /* Rich brown */
-            --error: #e63946;
+            --accent: #ffe8cc; /* Pale peach for subtle glow */
+            --shadow: rgba(255, 140, 56, 0.2);
+            --text: #4a3f35; /* Rich brown for readability */
         }
         * {
             margin: 0;
@@ -22,8 +31,8 @@
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
             overflow: hidden;
-            background: var(--dark);
             position: relative;
+            background: var(--dark);
         }
         .background {
             position: fixed;
@@ -31,10 +40,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(120deg, var(--dark) 40%, var(--accent) 70%, var(--primary) 100%);
+            background: linear-gradient(
+                    120deg,
+                    var(--dark) 40%,
+                    var(--accent) 70%,
+                    var(--primary) 100%
+            );
             opacity: 0.95;
             z-index: 0;
-            animation: gradientShift 20s ease infinite;
         }
         .window-rays {
             position: absolute;
@@ -54,53 +67,50 @@
         }
         .login-container {
             position: relative;
-            background: rgba(255, 245, 230, 0.92);
+            background: rgba(255, 245, 230, 0.9); /* Warm, semi-transparent cream */
             padding: 3rem 2.5rem;
             border-radius: 12px;
             width: 100%;
-            max-width: 420px;
+            max-width: 400px;
             margin: 4rem auto;
             box-shadow: 0 8px 24px var(--shadow);
             z-index: 2;
             animation: fadeIn 0.6s ease-out;
-            border: 1px solid rgba(255, 140, 56, 0.1);
         }
         h1 {
             color: var(--text);
             text-align: center;
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 600;
             margin-bottom: 2rem;
             letter-spacing: 0.5px;
-            text-shadow: 0 1px 4px var(--shadow);
+            text-shadow: 0 1px 3px var(--shadow);
         }
         form {
             display: flex;
             flex-direction: column;
-            gap: 1.75rem;
+            gap: 1.5rem;
         }
         label {
             color: var(--text);
             font-size: 1rem;
             font-weight: 500;
-            transition: color 0.3s ease;
         }
         input {
             margin-top: 0.5rem;
-            padding: 0.9rem 1.2rem;
+            padding: 0.9rem;
             background: var(--light);
             border: 1px solid var(--accent);
             border-radius: 8px;
             color: var(--text);
             font-size: 1rem;
-            width: 100%;
             transition: all 0.3s ease;
+            width: 100%;
         }
         input:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 8px var(--shadow);
-            background: rgba(255, 255, 255, 0.95);
         }
         button {
             padding: 1rem;
@@ -112,46 +122,17 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        button::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.5s ease, height 0.5s ease;
-        }
-        button:hover::after {
-            width: 200%;
-            height: 200%;
         }
         button:hover {
             background: #ff7030;
             box-shadow: 0 4px 12px var(--shadow);
-            transform: translateY(-2px);
-        }
-        button:active {
-            transform: scale(0.98);
         }
         p {
-            color: var(--error);
+            color: #e63946;
             text-align: center;
             margin-top: 1.5rem;
             font-size: 0.95rem;
             font-weight: 500;
-            opacity: 0;
-            animation: fadeInError 0.5s ease forwards;
-        }
-        @keyframes gradientShift {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
         }
         @keyframes raysShift {
             0% { transform: translateX(-20px) translateY(-20px); }
@@ -161,23 +142,19 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeInError {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
     </style>
 </head>
 <body>
 <div class="background"></div>
 <div class="window-rays"></div>
 <div class="login-container">
-    <h1>Dheis Popcorn Time</h1>
+    <h1>Cinexus</h1>
     <form th:action="@{/login}" method="post">
         <label>Email
-            <input type="text" name="email" required placeholder="Enter your email">
+            <input type="text" name="email" required>
         </label>
         <label>Password
-            <input type="password" name="password" required placeholder="Enter your password">
+            <input type="password" name="password" required>
         </label>
         <button type="submit">Sign In</button>
     </form>

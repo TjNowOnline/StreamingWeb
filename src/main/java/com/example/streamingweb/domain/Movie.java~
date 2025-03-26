@@ -5,15 +5,13 @@ public class Movie {
     private String title;
     private String genre;
     private String description;
-    private double averageRating;
 
     public Movie() {}
 
-    public Movie(String title, String genre, String description, double averageRating) {
+    public Movie(String title, String genre, String description) {
         this.title = title;
         this.genre = genre;
         this.description = description;
-        this.averageRating = averageRating;
     }
 
     public Long getId() { return id; }
@@ -24,6 +22,4 @@ public class Movie {
     public void setGenre(String genre) { this.genre = genre; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-    public double getAverageRating() { return averageRating; }
-    public void setAverageRating(double averageRating) { this.averageRating = averageRating; }
 }

@@ -1,4 +1,7 @@
 package com.example.streamingweb.infrastructure;
 
-public class UserRepository {
+import com.example.streamingweb.domain.User;
+
+public interface UserRepository {
+    User findByEmail(String email);
 }

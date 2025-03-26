@@ -25,13 +25,6 @@ public class MovieController {
         return "movieList";
     }
 
-    @GetMapping("/search")
-    public String searchMovies(@RequestParam String query, Model model) {
-        List<Movie> movies = movieService.searchMovies(query);
-        model.addAttribute("movies", movies);
-        return "movieList";
-    }
-
     @GetMapping("/play")
     public String playMovie(@RequestParam Long movieId, Model model) {
         String message = movieService.playMovie(movieId);

@@ -361,6 +361,8 @@
                 const title = button.getAttribute('data-title');
                 currentMovie.textContent = title;
                 nowPlaying.classList.add('active');
+
+                // Reset animation for a fresh pop
                 nowPlaying.style.animation = 'none';
                 setTimeout(() => {
                     nowPlaying.style.animation = '';
