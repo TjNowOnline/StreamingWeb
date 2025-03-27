@@ -2,119 +2,150 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login | Dheis Popcorn Time</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff8c38; /* Warm orange */
-            --dark: #fff5e6; /* Creamy off-white */
-            --light: #ffffff;
-            --accent: #ffe8cc; /* Pale peach */
-            --shadow: rgba(255, 140, 56, 0.25);
-            --text: #4a3f35; /* Rich brown */
-            --error: #e63946;
+            --dark: #121212; /* Deeper charcoal */
+            --light: #f0e6d2; /* Soft, warm off-white */
+            --accent: #ffb366; /* Brightened accent */
+            --shadow: rgba(255, 140, 56, 0.4);
+            --text: #e0d8c0; /* Warm, light gray text */
+            --error: #ff4d4d; /* Brighter error red */
+            --gradient-start: #ff9933; /* Start of gradient */
+            --gradient-end: #ff6600; /* End of gradient */
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Roboto', sans-serif; /* More modern and readable secondary font */
             min-height: 100vh;
             overflow: hidden;
             background: var(--dark);
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
         .background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(120deg, var(--dark) 40%, var(--accent) 70%, var(--primary) 100%);
-            opacity: 0.95;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            opacity: 0.7; /* Slightly less intense opacity */
             z-index: 0;
-            animation: gradientShift 20s ease infinite;
+            animation: gradientShift 15s ease infinite; /* Faster gradient shift */
+            filter: blur(8px); /* Slightly more blur for a smoother feel */
         }
-        .window-rays {
+
+        .login-container {
+            position: relative;
+            background: rgba(255, 255, 255, 0.08); /* Slightly more visible glass effect */
+            padding: 4.5rem 4rem; /* Increased padding */
+            border-radius: 25px; /* More rounded corners */
+            width: 100%;
+            max-width: 550px; /* Slightly wider */
+            box-shadow: 0 20px 50px var(--shadow); /* Increased shadow intensity */
+            z-index: 2;
+            animation: fadeIn 1.2s ease-out; /* Slightly longer fade-in */
+            border: 1px solid rgba(255, 140, 56, 0.25); /* Slightly more visible border */
+            backdrop-filter: blur(20px); /* Stronger backdrop blur */
+            transform: scale(1.03); /* Subtle zoom */
+            transition: transform 0.3s ease-in-out; /* Smooth scaling transition */
+        }
+
+        .login-container:hover {
+            transform: scale(1.04);
+        }
+
+        h1 {
+            color: var(--light);
+            text-align: center;
+            font-family: 'Playfair Display', serif; /* Emphasize the title font */
+            font-size: 3.5rem; /* Slightly larger title */
+            font-weight: 700;
+            margin-bottom: 3.5rem; /* Increased margin */
+            letter-spacing: 1px; /* Slightly reduced letter spacing */
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7); /* More pronounced text shadow */
+            animation: textGlow 2.5s ease-in-out infinite alternate; /* Slightly slower glow */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem; /* Increased gap between form elements */
+        }
+
+        label {
+            color: var(--light);
+            font-size: 1.25rem; /* Slightly larger label */
+            font-weight: 400; /* Lighter font weight for labels */
+            transition: color 0.3s ease;
+        }
+
+        label:hover {
+            color: var(--accent);
+        }
+
+        input {
+            margin-top: 1.2rem;
+            padding: 1.4rem 2rem; /* Increased padding */
+            background: rgba(255, 255, 255, 0.15); /* Slightly more opaque input background */
+            border: 1.5px solid var(--accent); /* Slightly thicker border */
+            border-radius: 15px; /* More rounded input fields */
+            color: var(--light);
+            font-size: 1.2rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.25); /* More prominent inner shadow */
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary); /* Change focus border color */
+            box-shadow: 0 0 15px var(--shadow), inset 0 3px 7px rgba(0, 0, 0, 0.3); /* Enhanced focus shadow */
+            background: rgba(255, 255, 255, 0.25); /* Slightly lighter background on focus */
+        }
+
+        button {
+            padding: 1.6rem 2.2rem; /* Increased button padding */
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            color: var(--light);
+            border: none;
+            border-radius: 15px; /* More rounded button */
+            font-size: 1.4rem; /* Slightly larger button text */
+            font-weight: 500; /* Slightly lighter button font weight */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* More intense button shadow */
+        }
+
+        button::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: repeating-linear-gradient(
-                    45deg,
-                    rgba(255, 140, 56, 0.15),
-                    rgba(255, 140, 56, 0.15) 20px,
-                    transparent 20px,
-                    transparent 40px
-            );
-            animation: raysShift 15s linear infinite;
-            z-index: 1;
+            background: rgba(255, 255, 255, 0.1); /* Subtle overlay for a glossy effect */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
-        .login-container {
-            position: relative;
-            background: rgba(255, 245, 230, 0.92);
-            padding: 3rem 2.5rem;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 420px;
-            margin: 4rem auto;
-            box-shadow: 0 8px 24px var(--shadow);
-            z-index: 2;
-            animation: fadeIn 0.6s ease-out;
-            border: 1px solid rgba(255, 140, 56, 0.1);
+
+        button:hover::before {
+            opacity: 1;
         }
-        h1 {
-            color: var(--text);
-            text-align: center;
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            letter-spacing: 0.5px;
-            text-shadow: 0 1px 4px var(--shadow);
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.75rem;
-        }
-        label {
-            color: var(--text);
-            font-size: 1rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        input {
-            margin-top: 0.5rem;
-            padding: 0.9rem 1.2rem;
-            background: var(--light);
-            border: 1px solid var(--accent);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 1rem;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 8px var(--shadow);
-            background: rgba(255, 255, 255, 0.95);
-        }
-        button {
-            padding: 1rem;
-            background: var(--primary);
-            color: var(--light);
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+
         button::after {
             content: '';
             position: absolute;
@@ -122,62 +153,89 @@
             left: 50%;
             width: 0;
             height: 0;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.2); /* Slightly less opaque ripple */
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            transition: width 0.5s ease, height 0.5s ease;
+            transition: width 0.6s ease-out, height 0.6s ease-out; /* Smoother ripple */
+            z-index: -1;
         }
+
         button:hover::after {
-            width: 200%;
-            height: 200%;
+            width: 350%; /* Larger ripple effect */
+            height: 350%;
         }
+
         button:hover {
-            background: #ff7030;
-            box-shadow: 0 4px 12px var(--shadow);
-            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6); /* Enhanced hover shadow */
+            transform: translateY(-5px); /* Slightly more pronounced lift on hover */
         }
+
         button:active {
-            transform: scale(0.98);
+            transform: scale(0.97); /* Subtle shrink on click */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Adjusted shadow on click */
         }
+
         p {
             color: var(--error);
             text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.95rem;
-            font-weight: 500;
+            margin-top: 3rem; /* Increased margin for error message */
+            font-size: 1.15rem;
+            font-weight: 400; /* Lighter font weight for error */
             opacity: 0;
-            animation: fadeInError 0.5s ease forwards;
+            animation: fadeInError 0.6s ease forwards; /* Slightly longer error fade-in */
         }
+
+        /* Subtle background animation with moving dots (optional, can be removed if preferred) */
+        .background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(255, 140, 56, 0.15) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.6;
+            animation: moveDots 10s linear infinite;
+        }
+
+        @keyframes moveDots {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 20px; }
+        }
+
         @keyframes gradientShift {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        @keyframes raysShift {
-            0% { transform: translateX(-20px) translateY(-20px); }
-            100% { transform: translateX(20px) translateY(20px); }
-        }
+
         @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px) scale(1); }
+            to { opacity: 1; transform: translateY(0) scale(1.03); }
+        }
+
+        @keyframes fadeInError {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeInError {
-            from { opacity: 0; }
-            to { opacity: 1; }
+
+        @keyframes textGlow {
+            from { text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7); }
+            to { text-shadow: 0 4px 15px rgba(255, 140, 56, 0.85); }
         }
     </style>
 </head>
 <body>
 <div class="background"></div>
-<div class="window-rays"></div>
 <div class="login-container">
     <h1>Dheis Popcorn Time</h1>
     <form th:action="@{/login}" method="post">
-        <label>Email
-            <input type="text" name="email" required placeholder="Enter your email">
+        <label for="email">Email
+            <input type="text" id="email" name="email" required placeholder="Enter your email">
         </label>
-        <label>Password
-            <input type="password" name="password" required placeholder="Enter your password">
+        <label for="password">Password
+            <input type="password" id="password" name="password" required placeholder="Enter your password">
         </label>
         <button type="submit">Sign In</button>
     </form>
